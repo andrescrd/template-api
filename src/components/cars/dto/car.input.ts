@@ -7,5 +7,4 @@ export class CarInput {
 
     @Field()
     alias: string
-
 }
