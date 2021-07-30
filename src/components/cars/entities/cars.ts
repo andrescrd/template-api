@@ -1,27 +1,15 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseModelEntity } from "src/core/models/base-model-entity";
+import { Column, Entity } from "typeorm";
 
-@Entity({name: 'cars'})
+@Entity({ name: 'cars' })
 @ObjectType()
-export class Car {
-
-    @PrimaryGeneratedColumn('uuid')
-    @Field()
-    id: string;
-
+export class Car extends BaseModelEntity {
     @Column()
     @Field()
-    name:  string
+    name: string
 
     @Column()
     @Field()
     alias: string
-
-    @CreateDateColumn({type: 'timestamp'})
-    @Field()
-    createdAt: Date; 
-
-    @DeleteDateColumn({type: 'timestamp'})
-    @Field()
-    deletedAt: Date; 
 }

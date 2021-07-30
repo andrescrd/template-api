@@ -1,18 +1,19 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { BaseService } from 'src/core/services/base-service';
 import { User } from './entities/users';
 
+const DataService  = BaseService(User);
+
 @Injectable()
-export class UsersService {
+export class UsersService extends DataService {
 
-    constructor(@InjectRepository(User) private userRepository: Repository<User>) { }
+    async getByUserName(userName: string) {
+        const user = await this.repository.findOne({ userName: userName });
+        
+        if (!user) {
+            throw new NotFoundException();
+        }
 
-    getSingle(id: string): Promise<User> {
-        return this.userRepository.findOne(id).then((e => { throw new InternalServerErrorException() }));
-    }
-
-    getByUserName(userName: string) {
-        return  this.userRepository.findOne({ userName: userName });
+        return user;
     }
 }

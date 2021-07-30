@@ -6,17 +6,17 @@ import { CarInput } from "./dto/car.input";
 import { Car } from "./entities/cars";
 
 @Resolver()
+// @UseGuards(GqlAuthGuard)
 export class CarsResolver {
     constructor(private carsService: CarsService) { }
 
     @Query(() => [Car])
-    @UseGuards(GqlAuthGuard)
     public async cars(): Promise<Car[]> {
-        return await this.carsService.getAllCars().catch(err => { throw err });
+        return await this.carsService.getAll().catch(err => { throw err });
     }
 
     @Mutation(() => Car)
     public async addCar(@Args('data') car: CarInput): Promise<Car> {
-        return await this.carsService.addNewCar(car).catch(err => { throw err });
+        return await this.carsService.create(car).catch(err => { throw err });
     }
 }
