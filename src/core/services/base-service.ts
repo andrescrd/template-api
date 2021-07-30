@@ -44,12 +44,25 @@ export function BaseService<T extends BaseModelEntity>(entity: Constructor<T>) {
         }
 
         public async update(id: string, data: DeepPartial<T>) {
-            const result = await this.repository.update(id, data);
+            const currentEntity = await this.repository.findOne(id);
+
+            if (!currentEntity) {
+                throw new NotFoundException();                
+            }
+            
+            const updated = Object.assign(currentEntity, data);
+            await this.repository.update(id, updated);
             return await this.repository.findOne(id);
 
         }
 
         public async delete(id: string, isSoftDelete = true) {
+            const currentEntity = await this.repository.findOne(id);
+
+            if (!currentEntity) {
+                throw new NotFoundException();                
+            }
+            
             isSoftDelete ? await this.repository.softDelete(id) : await this.repository.delete(id);
             return true;
         }
