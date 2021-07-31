@@ -1,12 +1,14 @@
+import { UseGuards } from "@nestjs/common";
 import { Resolver } from "@nestjs/graphql";
 import BaseResolver from "src/core/resolvers/base-resolver";
+import { GqlAuthGuard } from "../auth/guards/gql-auth.guard";
 import { CarsService } from "./cars.service";
 import { Car } from "./entities/cars";
 
 const {ResolverQuery, ResolverMutation} = BaseResolver(Car);
 
 @Resolver()
-// @UseGuards(GqlAuthGuard)
+@UseGuards(GqlAuthGuard)
 export class CarsQueryResolver extends ResolverQuery<Car> {
     constructor(carsService: CarsService) { 
         super(carsService);
@@ -14,7 +16,7 @@ export class CarsQueryResolver extends ResolverQuery<Car> {
 }
 
 @Resolver()
-// @UseGuards(GqlAuthGuard)
+@UseGuards(GqlAuthGuard)
 export class CarsMutationResolver extends ResolverMutation<Car> {
     constructor(carsService: CarsService) { 
         super(carsService);
