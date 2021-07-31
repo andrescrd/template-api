@@ -1,14 +1,13 @@
 import { Query, Resolver } from '@nestjs/graphql';
+import BaseResolver from 'src/core/resolvers/base-resolver';
 import { User } from './entities/users';
 import { UsersService } from './users.service';
 
+const { ResolverQuery } = BaseResolver(User);
+
 @Resolver()
-export class UsersResolver {
-
-    constructor(private userService: UsersService) { }
-
-    @Query(() => [User])
-    public async users(): Promise<User[]> {
-        return await this.userService.getAll();
+export class UsersResolver extends ResolverQuery<User> {
+    constructor(protected userService: UsersService) {
+        super(userService);
     }
 }

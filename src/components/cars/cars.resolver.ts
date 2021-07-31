@@ -1,5 +1,5 @@
 import { Resolver } from "@nestjs/graphql";
-import { BaseResolver } from "src/core/resolvers/base-resolver";
+import BaseResolver from "src/core/resolvers/base-resolver";
 import { CarsService } from "./cars.service";
 import { Car } from "./entities/cars";
 

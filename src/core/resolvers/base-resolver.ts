@@ -4,7 +4,7 @@ import { getInputClass, getModelName } from "../utils/model.utils";
 import { BaseResolverMutation } from "./base-resolver-mutation";
 import { BaseResolverQuery } from "./base-resolver-query";
 
-export function BaseResolver<T extends BaseModelEntity>(entity: Constructor<T>, 
+export default function BaseResolver<T extends BaseModelEntity>(entity: Constructor<T>, 
     options: { queryWithDeleted?: boolean, withMutation: boolean } = { queryWithDeleted: true, withMutation: true }) {
 
     const { queryWithDeleted, withMutation } = options;
