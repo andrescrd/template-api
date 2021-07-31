@@ -15,7 +15,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       playground: true,
       autoSchemaFile: true
     }),
-    ComponentsModule
+    ComponentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import BaseResolver from 'src/core/resolvers/base-resolver';
-import { CreateUserInput } from './dto/create-user.input';
-import { User } from './entities/users';
-import { UsersService } from './users.service';
+import { CreateUserInput } from '../dtos/create-user.input';
+import { User } from '../entities/users';
+import { UsersService } from '../services/users.service';
 
 const { ResolverQuery, ResolverMutation } = BaseResolver(User);
 
@@ -12,6 +12,7 @@ export class UsersQueryResolver extends ResolverQuery<User> {
         super(userService);
     }
 }
+
 @Resolver()
 export class UsersMutationResolver extends ResolverMutation<User> {
     constructor(protected userService: UsersService) {

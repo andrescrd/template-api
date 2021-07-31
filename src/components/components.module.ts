@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { CarsModule } from "./cars/cars.module";
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { MainModule } from './main/main.module';
 
 @Module({
-    imports: [CarsModule, AuthModule, UsersModule]
+    imports: [AuthModule, MainModule]
 })
 export class ComponentsModule {
 

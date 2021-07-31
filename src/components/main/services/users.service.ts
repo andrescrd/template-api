@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BaseService } from 'src/core/services/base-service';
-import { User } from './entities/users';
+import { User } from '../entities/users';
 import { hash } from 'bcryptjs';
 
 const DataService = BaseService(User);

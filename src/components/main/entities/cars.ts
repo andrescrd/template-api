@@ -2,17 +2,17 @@ import { Field, ObjectType } from "@nestjs/graphql";
 import { Inputs } from "src/core/decorators/input.decorator";
 import { BaseModelEntity } from "src/core/models/base-model-entity";
 import { Column, Entity } from "typeorm";
-import { CreateUserInput } from "../dto/create-user.input";
+import { CarInput } from "../dtos/create-car.input";
 
-@Entity('users')
+@Entity({ name: 'cars' })
 @ObjectType()
-@Inputs(CreateUserInput)
-export class User extends BaseModelEntity {  
-
-    @Column({ unique: true })
+@Inputs(CarInput)
+export class Car extends BaseModelEntity {
+    @Column()
     @Field()
-    userName: string;
+    name: string
 
     @Column()
-    hash: string;    
+    @Field()
+    alias: string
 }

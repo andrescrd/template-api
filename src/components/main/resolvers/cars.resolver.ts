@@ -1,9 +1,9 @@
 import { UseGuards } from "@nestjs/common";
 import { Resolver } from "@nestjs/graphql";
 import BaseResolver from "src/core/resolvers/base-resolver";
-import { GqlAuthGuard } from "../auth/guards/gql-auth.guard";
-import { CarsService } from "./cars.service";
-import { Car } from "./entities/cars";
+import { GqlAuthGuard } from "../../auth/guards/gql-auth.guard";
+import { CarsService } from "../services/cars.service";
+import { Car } from "../entities/cars";
 
 const {ResolverQuery, ResolverMutation} = BaseResolver(Car);
 
