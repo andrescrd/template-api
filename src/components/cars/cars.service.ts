@@ -7,6 +7,4 @@ import { Car } from "./entities/cars";
 const DataService  = BaseService(Car);
 
 @Injectable()
-export class CarsService extends DataService {  
-    
-}
+export class CarsService extends DataService { }

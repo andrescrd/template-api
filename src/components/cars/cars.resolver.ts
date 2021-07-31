@@ -1,22 +1,22 @@
-import { UseGuards } from "@nestjs/common";
-import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
-import { GqlAuthGuard } from "../auth/guards/gql-auth.guard";
+import { Resolver } from "@nestjs/graphql";
+import { BaseResolver } from "src/core/resolvers/base-resolver";
 import { CarsService } from "./cars.service";
-import { CarInput } from "./dto/car.input";
 import { Car } from "./entities/cars";
+
+const {ResolverQuery, ResolverMutation} = BaseResolver(Car);
 
 @Resolver()
 // @UseGuards(GqlAuthGuard)
-export class CarsResolver {
-    constructor(private carsService: CarsService) { }
-
-    @Query(() => [Car])
-    public async cars(): Promise<Car[]> {
-        return await this.carsService.getAll().catch(err => { throw err });
+export class CarsQueryResolver extends ResolverQuery<Car> {
+    constructor(carsService: CarsService) { 
+        super(carsService);
     }
+}
 
-    @Mutation(() => Car)
-    public async addCar(@Args('data') car: CarInput): Promise<Car> {
-        return await this.carsService.create(car).catch(err => { throw err });
+@Resolver()
+// @UseGuards(GqlAuthGuard)
+export class CarsMutationResolver extends ResolverMutation<Car> {
+    constructor(carsService: CarsService) { 
+        super(carsService);
     }
 }

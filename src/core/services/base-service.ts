@@ -2,18 +2,9 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { BaseModelEntity } from '../models/base-model-entity';
+import { IDataService } from './data-service.interface';
 
-export interface IDataService<T> {
-    readonly repository: Repository<T>
-
-    getAll: () => Promise<T[]>
-    getOne: (id: string) => Promise<T>
-    create: (data: DeepPartial<T>) => Promise<T>
-    update: (id: string, data: DeepPartial<T>) => Promise<T>
-    delete: (id: string, isSoftDelete: boolean) => Promise<boolean>
-}
-
-type Constructor<I> = new (...args: any[]) => I
+type Constructor<I> = new (...args: any[]) => I;
 
 export function BaseService<T extends BaseModelEntity>(entity: Constructor<T>) {
 
@@ -24,8 +15,8 @@ export function BaseService<T extends BaseModelEntity>(entity: Constructor<T>) {
             return this.repository.metadata.primaryColumns[0]?.propertyName
         }
 
-        public async getAll() {
-            return await this.repository.find();
+        public async getAll(withDeleted= false) {
+            return await this.repository.find({withDeleted: withDeleted});
         }
 
         public async getOne(id: string) {

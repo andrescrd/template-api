@@ -12,6 +12,8 @@ export class BaseModelEntity {
     createdAt: Date;
 
     @DeleteDateColumn({ type: 'timestamp' })
-    @Field()
+    @Field({ nullable: true })
     deletedAt: Date;
 }
+
+
