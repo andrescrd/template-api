@@ -2,9 +2,8 @@ import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { DeepPartial } from "typeorm";
 import { BaseModelEntity } from "../models/base-model-entity";
 import { IDataService } from "../services/data-service.interface";
+import { Constructor } from "../types/constructor-type";
 import { getInputClass, getModelName } from "../utils/model.utils";
-
-type Constructor<I> = new (...args: any[]) => I;
 
 export function BaseResolverMutation<T extends BaseModelEntity>(entity: Constructor<T>) {
 

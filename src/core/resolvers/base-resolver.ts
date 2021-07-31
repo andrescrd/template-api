@@ -1,9 +1,8 @@
 import { BaseModelEntity } from "../models/base-model-entity";
+import { Constructor } from "../types/constructor-type";
 import { getInputClass, getModelName } from "../utils/model.utils";
 import { BaseResolverMutation } from "./base-resolver-mutation";
 import { BaseResolverQuery } from "./base-resolver-query";
-
-type Constructor<I> = new (...args: any[]) => I;
 
 export function BaseResolver<T extends BaseModelEntity>(entity: Constructor<T>, 
     options: { queryWithDeleted?: boolean, withMutation: boolean } = { queryWithDeleted: true, withMutation: true }) {

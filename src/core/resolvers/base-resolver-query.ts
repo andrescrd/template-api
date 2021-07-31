@@ -1,9 +1,8 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { BaseModelEntity } from "../models/base-model-entity";
 import { IDataService } from "../services/data-service.interface";
+import { Constructor } from "../types/constructor-type";
 import { getModelName } from "../utils/model.utils";
-
-type Constructor<I> = new (...args: any[]) => I;
 
 export function BaseResolverQuery<T extends BaseModelEntity>(entity: Constructor<T>, withDeleted = true) {
 
