@@ -16,8 +16,8 @@ export function BaseResolverMutation<T extends BaseModelEntity>(entity: Construc
         constructor(private service: IDataService<T>) { }
 
         @Mutation(() => entity, { name: `${modelName}Create`})
-        public async Create(@Args('data', { type: () => inputClass }) car: DeepPartial<T>): Promise<T> {
-            return await this.service.create(car).catch(err => { throw err });
+        public async Create(@Args('data', { type: () => inputClass }) data: DeepPartial<T>): Promise<T> {
+            return await this.service.create(data).catch(err => { throw err });
         }
 
         @Mutation(() => entity,  { name: `${modelName}Update` })

@@ -4,8 +4,10 @@ import { getInputClass, getModelName } from "../utils/model.utils";
 import { BaseResolverMutation } from "./base-resolver-mutation";
 import { BaseResolverQuery } from "./base-resolver-query";
 
-export default function BaseResolver<T extends BaseModelEntity>(entity: Constructor<T>, 
-    options: { queryWithDeleted?: boolean, withMutation: boolean } = { queryWithDeleted: true, withMutation: true }) {
+const DEFAULT_OPTIONS = { queryWithDeleted: true, withMutation: true };
+
+export default function BaseResolver<T extends BaseModelEntity>(entity: Constructor<T>,
+    options: { queryWithDeleted?: boolean, withMutation: boolean } = DEFAULT_OPTIONS) {
 
     const { queryWithDeleted, withMutation } = options;
     const inputClass = getInputClass(entity);
@@ -23,5 +25,5 @@ export default function BaseResolver<T extends BaseModelEntity>(entity: Construc
         return { ResolverQuery, ResolverMutation };
     }
 
-    return { ResolverQuery }
+    return { ResolverQuery };
 }
