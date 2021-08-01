@@ -2,9 +2,9 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { BaseModelEntity } from '../models/base-model-entity';
+import { Constructor } from '../types/constructor-type';
 import { IDataService } from './data-service.interface';
 
-type Constructor<I> = new (...args: any[]) => I;
 
 export function BaseService<T extends BaseModelEntity>(entity: Constructor<T>) {
 

@@ -1,28 +1,31 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { DeepPartial } from "typeorm";
 import { BaseModelEntity } from "../models/base-model-entity";
+import { BaseModelInput } from "../models/base-model-input";
 import { IDataService } from "../services/data-service.interface";
 import { Constructor } from "../types/constructor-type";
-import { getInputClass, getModelName } from "../utils/model.utils";
+import { getModelName } from "../utils/model.utils";
 
-export function BaseResolverMutation<T extends BaseModelEntity>(entity: Constructor<T>) {
+export function BaseResolverMutation<T extends BaseModelEntity, I extends BaseModelInput>(entity: Constructor<T>, inputClass: Constructor<I>) {
 
     const modelName = getModelName(entity);
-    const inputClass = getInputClass(entity);
+   
 
     @Resolver({ isAbstract: true })
-    abstract class BaseResolverMutationClass<T> {
+    abstract class BaseResolverMutationClass<T,I> {
 
         constructor(private service: IDataService<T>) { }
 
         @Mutation(() => entity, { name: `${modelName}Create`})
-        public async Create(@Args('data', { type: () => inputClass }) data: DeepPartial<T>): Promise<T> {
-            return await this.service.create(data).catch(err => { throw err });
+        public async Create(@Args('data', { type: () => inputClass }) data: DeepPartial<I>): Promise<T> {
+            const toSave = Object.assign(new entity(), data) as DeepPartial<T>;
+            return await this.service.create(toSave).catch(err => { throw err });
         }
 
         @Mutation(() => entity,  { name: `${modelName}Update` })
-        public async Update(@Args('id') id: string, @Args('data', { type: () => inputClass }) data: DeepPartial<T>): Promise<T> {
-            return await this.service.update(id, data).catch(err => { throw err });
+        public async Update(@Args('id') id: string, @Args('data', { type: () => inputClass }) data: DeepPartial<I>): Promise<T> {
+            const toSave = Object.assign(new entity(), data) as DeepPartial<T>;
+            return await this.service.update(id, toSave).catch(err => { throw err });
         }
 
         @Mutation(() => Boolean, { name: `${modelName}Delete` })

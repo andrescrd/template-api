@@ -1,8 +1,9 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { IsEmail, MinLength } from "class-validator";
+import { BaseModelInput } from "src/core/models/base-model-input";
 
 @InputType()
-export class CreateUserInput {
+export class UserInput extends BaseModelInput {
     @Field()
     @IsEmail()
     userName: string;

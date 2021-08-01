@@ -4,8 +4,9 @@ import BaseResolver from "src/core/resolvers/base-resolver";
 import { GqlAuthGuard } from "../../auth/guards/gql-auth.guard";
 import { CarsService } from "../services/cars.service";
 import { Car } from "../entities/cars";
+import { CarInput } from "../dtos/create-car.input";
 
-const {ResolverQuery, ResolverMutation} = BaseResolver(Car);
+const {ResolverQuery, ResolverMutation} = BaseResolver(Car, CarInput);
 
 @Resolver()
 @UseGuards(GqlAuthGuard)
@@ -17,7 +18,7 @@ export class CarsQueryResolver extends ResolverQuery<Car> {
 
 @Resolver()
 @UseGuards(GqlAuthGuard)
-export class CarsMutationResolver extends ResolverMutation<Car> {
+export class CarsMutationResolver extends ResolverMutation<Car, CarInput> {
     constructor(carsService: CarsService) { 
         super(carsService);
     }

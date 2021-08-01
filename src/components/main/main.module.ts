@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Car } from './entities/cars';
 import { Role } from './entities/roles';
+import { UserRole } from './entities/user-roles';
 import { User } from './entities/users';
 import { CarsMutationResolver, CarsQueryResolver } from './resolvers/cars.resolver';
 import { RolesMutationResolver, RolesQueryResolver } from './resolvers/roles.resolver';
@@ -12,7 +13,7 @@ import { UsersService } from './services/users.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([
-        User, Car, Role
+        User, Car, Role, UserRole
     ])],
     exports: [
         UsersService
