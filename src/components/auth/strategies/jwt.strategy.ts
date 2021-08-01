@@ -4,6 +4,7 @@ import { ExtractJwt } from 'passport-jwt';
 import { UsersService } from 'src/components/main/services/users.service';
 import { JWT_SECRET } from 'src/constants/constants';
 import { Strategy } from "passport-jwt";
+import { User } from 'src/components/main/entities/users';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    async validate(payload: { userName: string, sub: string }) {
-        return this.userService.getByUserName(payload.userName);
+    async validate(payload: { userName: string, sub: string }): Promise<User> | null {
+        return await this.userService.getByUserName(payload.userName);
     }
 }

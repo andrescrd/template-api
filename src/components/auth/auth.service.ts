@@ -12,20 +12,24 @@ export class AuthService {
         private jwtService: JwtService
     ) { }
 
-    async validate(userName: string, password: string): Promise<User> {
-        const user = await this.userService.getByUserName(userName);
+    async validate(userName: string, password: string): Promise<User> | null {
+        try {
+            const user = await this.userService.getByUserName(userName);
 
-        if (!user) {
+            if (!user) {
+                return null;
+            }
+
+            const verify = await compare(password, user.hash);
+
+            if (!verify) {
+                return null;
+            }
+
+            return user;
+        } catch (error) {
             return null;
         }
-
-        const verify = compare(password, user.hash);
-
-        if (!verify) {
-            return null;
-        }
-
-        return user;
     }
 
     login(user: User): { access_token: string } {
@@ -42,7 +46,7 @@ export class AuthService {
         var user = await this.userService.getByUserName(decode.userName);
 
         if (!!user) {
-            throw new Error("invalid token");
+            throw new Error("Invalid token");
         }
 
         return user;
