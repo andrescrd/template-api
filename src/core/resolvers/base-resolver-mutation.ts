@@ -8,8 +8,7 @@ import { getModelName } from "../utils/model.utils";
 
 export function BaseResolverMutation<T extends BaseModelEntity, I extends BaseModelInput>(entity: Constructor<T>, inputClass: Constructor<I>) {
 
-    const modelName = getModelName(entity);
-   
+    const modelName = getModelName(entity);   
 
     @Resolver({ isAbstract: true })
     abstract class BaseResolverMutationClass<T,I> {
