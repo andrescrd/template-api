@@ -4,7 +4,7 @@ import BaseResolver from "src/core/resolvers/base-resolver";
 import { GqlAuthGuard } from "../../auth/guards/gql-auth.guard";
 import { CarsService } from "../services/cars.service";
 import { Car } from "../entities/cars";
-import { CarInput } from "../dtos/create-car.input";
+import { CarInput } from "../dtos/car.input";
 
 const {ResolverQuery, ResolverMutation} = BaseResolver(Car, CarInput);
 
