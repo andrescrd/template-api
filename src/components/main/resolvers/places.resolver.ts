@@ -1,6 +1,7 @@
-import { BadRequestException, NotFoundException, Req } from "@nestjs/common";
+import { BadRequestException, NotFoundException, Req, UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { Request } from 'express';
+import { GqlAuthGuard } from "src/components/auth/guards/gql-auth.guard";
 import BaseResolver from "src/core/resolvers/base-resolver";
 import { PlaceInput } from "../dtos/place.input";
 import { Place } from "../entities/places";
@@ -23,9 +24,8 @@ export class PlacesMutationResolver extends ResolverMutation<Place, PlaceInput> 
     }
 
     @Mutation(() => Place)
-    async addQuantity(@Req() request: Request, @Args('id') id: string) {
-        const user = request.user as User;
-        console.log(user);
+    @UseGuards(GqlAuthGuard)
+    async addQuantity(@Args('id') id: string) {
         const place = await this.service.getOne(id);
 
         if (!place) {
@@ -42,6 +42,7 @@ export class PlacesMutationResolver extends ResolverMutation<Place, PlaceInput> 
     }
 
     @Mutation(() => Place)
+    @UseGuards(GqlAuthGuard)
     async removeQuantity(@Args('id') id: string) {
         const place = await this.service.getOne(id);
 

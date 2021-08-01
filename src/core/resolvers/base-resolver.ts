@@ -22,6 +22,7 @@ export default function BaseResolver<T extends BaseModelEntity, I extends BaseMo
             inputClass,
             (options.useAuthGuard && options.useAuthGuard.mutation) ?? DEFAULT_OPTIONS.useAuthGuard.mutation
         );
+        
         return { ResolverQuery, ResolverMutation };
     }
 

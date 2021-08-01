@@ -1,6 +1,4 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-// import { GqlAuthGuard } from 'src/components/auth/guards/gql-auth.guard';
 import BaseResolver from 'src/core/resolvers/base-resolver';
 import { UserInput } from '../dtos/user.input';
 import { User } from '../entities/users';
@@ -9,7 +7,6 @@ import { UsersService } from '../services/users.service';
 const { ResolverQuery, ResolverMutation } = BaseResolver(User, UserInput);
 
 @Resolver()
-// @UseGuards(GqlAuthGuard)
 export class UsersQueryResolver extends ResolverQuery<User> {
     constructor(protected userService: UsersService) {
         super(userService);
@@ -17,7 +14,7 @@ export class UsersQueryResolver extends ResolverQuery<User> {
 }
 
 @Resolver()
-export class UsersMutationResolver extends ResolverMutation<User,UserInput> {
+export class UsersMutationResolver extends ResolverMutation<User, UserInput> {
     constructor(protected userService: UsersService) {
         super(userService);
     }
