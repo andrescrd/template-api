@@ -32,13 +32,13 @@ export class AuthService {
         }
     }
 
-    login(user: User): { access_token: string } {
+    login(user: User): { accessToken: string } {
         const payload = {
             userName: user.userName,
             sub: user.id
         };
 
-        return { access_token: this.jwtService.sign(payload) }
+        return { accessToken: this.jwtService.sign(payload) }
     }
 
     async verify(token: string): Promise<User> {

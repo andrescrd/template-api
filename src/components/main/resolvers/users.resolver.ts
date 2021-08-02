@@ -1,4 +1,6 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/components/auth/guards/gql-auth.guard';
 import BaseResolver from 'src/core/resolvers/base-resolver';
 import { UserInput } from '../dtos/user.input';
 import { User } from '../entities/users';
@@ -20,6 +22,7 @@ export class UsersMutationResolver extends ResolverMutation<User, UserInput> {
     }
 
     @Mutation(() => User)
+    @UseGuards(GqlAuthGuard)
     async userRegister(@Args('data') data: UserInput) {
         const { userName, password } = data;
         const user = await this.userService.register(userName, password);
